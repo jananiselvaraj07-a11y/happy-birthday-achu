@@ -235,8 +235,6 @@ if(heartButton){
 
         }
 
-
-
         if(stars){
 
             stars.classList.add(
@@ -245,18 +243,12 @@ if(heartButton){
 
         }
 
-
-
         heartInterval =
         setInterval(
             createHeart,
             180
         );
-
-
     });
-
-
 
 
 
@@ -272,8 +264,6 @@ if(heartButton){
 
         }
 
-
-
         if(stars){
 
             stars.classList.remove(
@@ -282,60 +272,30 @@ if(heartButton){
 
         }
 
-
-
         clearInterval(
             heartInterval
         );
 
-
     });
-
-
-
-
 
 
     heartButton.addEventListener(
     "click",
     ()=>{
 
-
         startMusic();
-
-
 
         createHeart();
 
-
-
-
         setTimeout(()=>{
-
 
             saveMusicState();
 
-
-
             window.location.href = "pages/page2.html";
 
-
-
-        },1200);
-
-
-
-    });
-
-
-
+    },3000);
+ });
 }
-
-
-
-
-
-
 
 
 /* ==========================
@@ -383,13 +343,6 @@ function createBalloon(){
 
 
 }
-
-
-
-
-
-
-
 
 
 /* ==========================
@@ -447,13 +400,6 @@ document.addEventListener(
     document.getElementById(
         "continueButton"
     );
-
-
-
-
-
-
-
 
 
     /* ==========================
@@ -556,215 +502,282 @@ document.addEventListener(
 
 
 
-
-            setTimeout(()=>{
-
+setTimeout(()=>{
 
 
-                candleSection.style.display =
-                "none";
+    candleSection.style.display = "none";
 
 
-
-
-                if(storyReveal){
-
-
-                    storyReveal.style.display =
-                    "block";
-
-
-
-                    setTimeout(()=>{
-
-                        storyReveal.style.opacity =
-                        "1";
-
-                    },100);
-
-
-                }
-
-
-
-
-
-                clearInterval(
-                    balloonInterval
-                );
-
-
-
-
-
-                if(storyText){
-
-                    storyText.classList.add(
-                        "show"
-                    );
-
-                }
-
-
-
-
-
-                if(continueButton){
-
-                    continueButton.classList.add(
-                        "show"
-                    );
-
-                }
-
-
-
-            },5000);
-
-
-
-        });
-
-
-
-    }
-
-
-
-
-
-
-
-
-    /* ==========================
-       STORY PAGES
-    ========================== */
-
-
-    const paragraphs =
-    document.querySelectorAll(
-        ".paragraph"
+    clearInterval(
+        balloonInterval
     );
 
 
+    // Reveal story message after candles
+    if(storyReveal){
 
-    paragraphs.forEach(
-    (p,index)=>{
+        storyReveal.style.display = "block";
 
 
         setTimeout(()=>{
 
+            storyReveal.style.opacity = "1";
 
-            p.classList.add(
-                "show"
-            );
+        },100);
 
-
-        },index*2500);
-
-
-
-    });
-
-
-
-
+    }
 
 
     if(storyText){
 
-
-        setTimeout(()=>{
-
-
-            storyText.classList.add(
-                "show"
-            );
-
-
-        },700);
-
+        storyText.classList.add(
+            "show"
+        );
 
     }
-
-
-
-
-
-
-
-
-
-
-    /* ==========================
-       PAGE NAVIGATION
-    ========================== */
 
 
     if(continueButton){
 
-
-        continueButton.addEventListener(
-        "click",
-        ()=>{
-
-
-            saveMusicState();
-
-
-
-            const path =
-            window.location.pathname;
-
-
-
-
-
-            if(path.includes("page2")){
-
-
-                window.location.href =
-                "page3.html";
-
-
-            }
-
-            else if(path.includes("page3")){
-
-
-                window.location.href =
-                "page4.html";
-
-
-            }
-
-            else if(path.includes("page4")){
-
-
-                window.location.href =
-                "page5.html";
-
-
-            }
-
-            else if(path.includes("page5")){
-
-
-                window.location.href =
-                "page6.html";
-
-
-            }
-
-
-
-
-        });
-
-
+        continueButton.classList.add(
+            "show"
+        );
 
     }
 
 
+},5000);
 
+        });
+    }
+
+
+/* ==========================
+   STORY PAGES
+========================== */
+
+
+const storyParagraphs = document.querySelectorAll(
+    ".story-text .paragraph"
+);
+
+
+const wishParagraphs = document.querySelectorAll(
+    ".wish-build-up .wish-line"
+);
+
+
+const memoryParagraphs = document.querySelectorAll(
+    ".memory-section .paragraph"
+);
+
+
+const sparkle = document.querySelector(".sparkle");
+const littleText = document.querySelector(".little-text");
+const wishTime = document.querySelector(".wish-time");
+
+const memoryTitle = document.querySelector(".memory-title");
+const memorySection = document.querySelector("#memorySection");
+
+
+
+/*
+   FIRST STORY SECTION
+   (You're kind...
+    You're thoughtful...
+    etc.)
+*/
+
+storyParagraphs.forEach((p, index) => {
+
+
+    setTimeout(() => {
+
+
+        p.classList.add("show");
+
+
+    }, index * 2500);
+
+
+});
+
+/*
+   WISH BUILD UP SECTION
+   Starts only after first story finishes
+*/
+
+const wishStartDelay = 
+(storyParagraphs.length * 1200) + 2000;
+
+
+
+wishParagraphs.forEach((p,index)=>{
+
+
+    setTimeout(()=>{
+
+
+        p.classList.add("show");
+
+
+
+        /*
+           Trigger 11:09 reveal
+           only after:
+           Because I already got mine.
+        */
+
+        if(p.classList.contains("trigger-reveal")){
+
+
+            setTimeout(()=>{
+
+
+                if(sparkle){
+
+                    sparkle.classList.add("show");
+
+                }
+
+
+            },1200);
+
+
+
+            setTimeout(()=>{
+
+
+                if(littleText){
+
+                    littleText.classList.add("show");
+
+                }
+
+
+            },1800);
+
+
+
+            setTimeout(()=>{
+
+
+                if(wishTime){
+
+                    wishTime.classList.add("show");
+
+                }
+
+
+            },2600);
+
+
+
+            /*
+               Memory heading appears
+            */
+
+            setTimeout(()=>{
+
+
+                if(memorySection){
+
+                    memorySection.classList.add("show");
+
+                }
+
+
+                if(memoryTitle){
+
+                    memoryTitle.classList.add("show");
+
+                }
+
+
+            },5200);
+
+
+
+            /*
+               Memory paragraphs after heading
+            */
+
+            setTimeout(()=>{
+
+
+                memoryParagraphs.forEach((item,i)=>{
+
+
+                    setTimeout(()=>{
+
+
+                        item.classList.add("show");
+
+
+                    }, i * 700);
+
+
+                });
+
+
+            },8200);
+
+
+
+        }
+
+
+
+    }, wishStartDelay + (index * 1800));
+
+
+});
+
+/*
+   Page2/Page3 story reveal
+*/
+
+if (storyText) {
+
+     setTimeout(()=>{
+
+        storyText.classList.add("show");
+
+
+    },700);
+}
+
+/* ==========================
+   PAGE NAVIGATION
+========================== */
+
+if (continueButton) {
+
+    continueButton.addEventListener("click", () => {
+
+        saveMusicState();
+
+        const path = window.location.pathname;
+
+        if (path.includes("page2")) {
+
+            window.location.href = "page3.html";
+
+        } else if (path.includes("page3")) {
+
+            window.location.href = "page4.html";
+
+        } else if (path.includes("page4")) {
+
+            window.location.href = "page5.html";
+
+        } else if (path.includes("page5")) {
+
+            window.location.href = "page6.html";
+
+        }
+
+    });
+
+}
 });
