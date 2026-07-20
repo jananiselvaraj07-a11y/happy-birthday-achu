@@ -260,7 +260,7 @@ if(heartButton){
         if(clickText){
 
             clickText.innerHTML =
-            "Your birthday gift is waiting... ❤️";
+            "And here's a little birthday surprise waiting for you... 🎁";
 
         }
 
@@ -349,409 +349,405 @@ function createBalloon(){
    PAGE LOGIC
 ========================== */
 
-
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
-
+document.addEventListener("DOMContentLoaded", () => {
 
     /*
        Resume music on page2-page6
     */
 
-   if(
-    localStorage.getItem("musicPlaying")
-    === "true"
-){
+    if (localStorage.getItem("musicPlaying") === "true") {
+        startMusic();
+    }
 
-    startMusic();
+    const blowButton = document.getElementById("blowButton");
 
-}
+    const candleSection = document.querySelector(".candle-section");
 
-    const blowButton =
-    document.getElementById(
-        "blowButton"
-    );
+    const storyReveal = document.querySelector(".story-reveal");
 
+    const storyText = document.querySelector(".story-text");
 
-
-    const candleSection =
-    document.querySelector(
-        ".candle-section"
-    );
-
-
-
-    const storyReveal =
-    document.querySelector(
-        ".story-reveal"
-    );
-
-
-
-    const storyText =
-    document.querySelector(
-        ".story-text"
-    );
-
-
-
-    const continueButton =
-    document.getElementById(
-        "continueButton"
-    );
-
+    const continueButton = document.getElementById("continueButton");
 
     /* ==========================
        CANDLE PAGE
     ========================== */
 
+    if (blowButton) {
 
-    if(blowButton){
-
-
-
-        blowButton.addEventListener(
-        "click",
-        ()=>{
-
+        blowButton.addEventListener("click", () => {
 
             const wishTitle =
-            document.querySelector(
-                ".candle-section h2"
-            );
+                document.querySelector(".candle-section h2");
 
+            if (wishTitle) {
 
+                wishTitle.style.opacity = "0";
 
-            if(wishTitle){
-
-
-                wishTitle.style.opacity =
-                "0";
-
-
-
-                setTimeout(()=>{
-
-                    wishTitle.style.display =
-                    "none";
-
-                },500);
-
+                setTimeout(() => {
+                    wishTitle.style.display = "none";
+                }, 500);
 
             }
 
-
-
-
-            blowButton.style.display =
-            "none";
-
-
-
-
-
+            blowButton.style.display = "none";
 
             const birthdayText =
-            document.createElement(
-                "h2"
-            );
+                document.createElement("h2");
 
-
-
-            birthdayText.className =
-            "birthday-message";
-
-
+            birthdayText.className = "birthday-message";
 
             birthdayText.innerHTML =
-            "Happy Birthday Darling! 💫";
+                "Happy Birthday Darling! 💫";
 
-
-
-            candleSection.appendChild(
-                birthdayText
-            );
-
-
-
-
-
+            candleSection.appendChild(birthdayText);
 
             let balloonInterval;
 
-
-
-
-            for(let i=0;i<10;i++){
-
+            for (let i = 0; i < 10; i++) {
                 createBalloon();
-
             }
 
-
-
-
             balloonInterval =
-            setInterval(
-                createBalloon,
-                250
-            );
+                setInterval(createBalloon, 250);
 
+            setTimeout(() => {
 
+                candleSection.style.display = "none";
 
+                clearInterval(balloonInterval);
 
+                if (storyReveal) {
 
-setTimeout(()=>{
+                    storyReveal.style.display = "block";
 
+                    setTimeout(() => {
 
-    candleSection.style.display = "none";
+                        storyReveal.style.opacity = "1";
 
+                    }, 100);
 
-    clearInterval(
-        balloonInterval
-    );
+                }
 
+                if (storyText) {
+                    storyText.classList.add("show");
+                }
 
-    // Reveal story message after candles
-    if(storyReveal){
+                if (continueButton) {
+                    continueButton.classList.add("show");
+                }
 
-        storyReveal.style.display = "block";
-
-
-        setTimeout(()=>{
-
-            storyReveal.style.opacity = "1";
-
-        },100);
-
-    }
-
-
-    if(storyText){
-
-        storyText.classList.add(
-            "show"
-        );
-
-    }
-
-
-    if(continueButton){
-
-        continueButton.classList.add(
-            "show"
-        );
-
-    }
-
-
-},5000);
+            }, 5000);
 
         });
+
     }
 
+    /* ==========================
+       STORY PAGES
+    ========================== */
 
-/* ==========================
-   STORY PAGES
-========================== */
+    const storyParagraphs =
+        document.querySelectorAll(".story-text .paragraph");
 
+    const wishParagraphs =
+        document.querySelectorAll(".wish-build-up .wish-line");
 
-const storyParagraphs = document.querySelectorAll(
-    ".story-text .paragraph"
-);
+    const memoryParagraphs =
+        document.querySelectorAll(".memory-section .paragraph");
 
+    const sparkle =
+        document.querySelector(".sparkle");
 
-const wishParagraphs = document.querySelectorAll(
-    ".wish-build-up .wish-line"
-);
+    const littleText =
+        document.querySelector(".little-text");
 
+    const wishTime =
+        document.querySelector(".wish-time");
 
-const memoryParagraphs = document.querySelectorAll(
-    ".memory-section .paragraph"
-);
+    const memoryTitle =
+        document.querySelector(".memory-title");
 
+    const memorySection =
+        document.querySelector("#memorySection");
 
-const sparkle = document.querySelector(".sparkle");
-const littleText = document.querySelector(".little-text");
-const wishTime = document.querySelector(".wish-time");
+    /*
+       First story reveal
+    */
 
-const memoryTitle = document.querySelector(".memory-title");
-const memorySection = document.querySelector("#memorySection");
+    storyParagraphs.forEach((p, index) => {
 
+        setTimeout(() => {
 
+            p.classList.add("show");
 
-/*
-   FIRST STORY SECTION
-   (You're kind...
-    You're thoughtful...
-    etc.)
-*/
+        }, index * 2500);
 
-storyParagraphs.forEach((p, index) => {
+    });
 
+    /*
+       Wish build up
+    */
+    const storyRevealSpeed = 2500;
+
+    const wishStartDelay =
+    (storyParagraphs.length * storyRevealSpeed) + 2000;
+
+   wishParagraphs.forEach((p, index) => {
 
     setTimeout(() => {
 
-
         p.classList.add("show");
 
+        // After "Because I already got mine."
+        if (p.classList.contains("trigger-reveal")) {
 
-    }, index * 2500);
+            setTimeout(() => {
 
-
-});
-
-/*
-   WISH BUILD UP SECTION
-   Starts only after first story finishes
-*/
-
-const wishStartDelay = 
-(storyParagraphs.length * 1200) + 2000;
-
-
-
-wishParagraphs.forEach((p,index)=>{
-
-
-    setTimeout(()=>{
-
-
-        p.classList.add("show");
-
-
-
-        /*
-           Trigger 11:09 reveal
-           only after:
-           Because I already got mine.
-        */
-
-        if(p.classList.contains("trigger-reveal")){
-
-
-            setTimeout(()=>{
-
-
-                if(sparkle){
-
+                if (sparkle)
                     sparkle.classList.add("show");
 
-                }
+            }, 1200);
 
+            setTimeout(() => {
 
-            },1200);
-
-
-
-            setTimeout(()=>{
-
-
-                if(littleText){
-
+                if (littleText)
                     littleText.classList.add("show");
 
-                }
+            }, 1800);
 
+            setTimeout(() => {
 
-            },1800);
-
-
-
-            setTimeout(()=>{
-
-
-                if(wishTime){
-
+                if (wishTime)
                     wishTime.classList.add("show");
 
-                }
+            }, 2600);
 
+            // Reveal memory section
+            setTimeout(() => {
 
-            },2600);
-
-
-
-            /*
-               Memory heading appears
-            */
-
-            setTimeout(()=>{
-
-
-                if(memorySection){
-
+                if (memorySection)
                     memorySection.classList.add("show");
 
-                }
-
-
-                if(memoryTitle){
-
+                if (memoryTitle)
                     memoryTitle.classList.add("show");
 
-                }
+            }, 5200);
 
+            // Reveal memory paragraphs one by one
+            setTimeout(() => {
 
-            },5200);
+                memoryParagraphs.forEach((item, i) => {
 
-
-
-            /*
-               Memory paragraphs after heading
-            */
-
-            setTimeout(()=>{
-
-
-                memoryParagraphs.forEach((item,i)=>{
-
-
-                    setTimeout(()=>{
-
+                    setTimeout(() => {
 
                         item.classList.add("show");
 
-
                     }, i * 700);
-
 
                 });
 
-
-            },8200);
-
-
+            }, 8200);
 
         }
 
-
-
     }, wishStartDelay + (index * 1800));
-
 
 });
 
-/*
-   Page2/Page3 story reveal
-*/
+    /*
+       Story container fade
+    */
 
-if (storyText) {
+    if (storyText) {
 
-     setTimeout(()=>{
+        setTimeout(() => {
 
-        storyText.classList.add("show");
+            storyText.classList.add("show");
 
+        }, 700);
 
-    },700);
-}
+    }
+
 
 /* ==========================
-   PAGE NAVIGATION
+   PAGE 6 FINAL MESSAGE
 ========================== */
 
-if (continueButton) {
+const page6Content = document.getElementById("page6Content");
+
+const birthdayHeading =
+document.querySelector(".final-message h1");
+
+const gratefulLine =
+document.querySelector(".final-message p.final-line");
+
+if (birthdayHeading && gratefulLine) {
+
+    const finalStartDelay =
+        (storyParagraphs.length * 2500) + 1500;
+
+    setTimeout(() => {
+        birthdayHeading.classList.add("show");
+    }, finalStartDelay);
+
+    setTimeout(() => {
+        gratefulLine.classList.add("show");
+    }, finalStartDelay + 1800);
+}
+
+
+/* ==========================
+   TYPEWRITER NICKNAME
+========================== */
+
+const nicknameText =
+document.getElementById("nicknameText");
+
+if (nicknameText) {
+
+    const nicknames = [
+
+        "Batman",
+        "Baby",
+        "Little Pie",
+        "Unpaid Therapist",
+        "Pretty",
+        "Darling",
+        "Favorite",
+        "Cutie",
+        "Sunshine ✨"
+
+    ];
+
+    const finalStartDelay =
+        (storyParagraphs.length * 2500) + 1500;
+
+    let wordIndex = 0;
+
+    function typeWord(word, callback){
+
+        let i = 0;
+
+        nicknameText.textContent = "";
+
+        const typing = setInterval(()=>{
+
+            nicknameText.textContent += word.charAt(i);
+
+            i++;
+
+            if(i === word.length){
+
+                clearInterval(typing);
+
+                setTimeout(callback,900);
+
+            }
+
+        },80);
+
+    }
+
+    function eraseWord(callback){
+
+        let word = nicknameText.textContent;
+
+        const erasing = setInterval(()=>{
+
+            word = word.slice(0,-1);
+
+            nicknameText.textContent = word;
+
+            if(word.length===0){
+
+                clearInterval(erasing);
+
+                callback();
+
+            }
+
+        },45);
+
+    }
+
+    function animateWords(){
+
+        typeWord(
+
+            nicknames[wordIndex],
+
+            ()=>{
+
+                // Last nickname reached
+                if(wordIndex === nicknames.length - 1){
+
+                    setTimeout(()=>{
+
+                        document
+                            .querySelector(".signature-text")
+                            ?.classList.add("show");
+
+                        setTimeout(()=>{
+
+                            document
+                                .querySelector(".signature")
+                                ?.classList.add("show");
+
+                            // Wait 4 seconds after Jan appears
+
+                            // Wait 4 seconds after Jan appears
+    setTimeout(() => {
+
+    page6Content?.classList.add("hide");
+
+    setTimeout(() => {
+
+        page6Content?.classList.add("hidden");
+
+        document.querySelector(".page6-page")
+    ?.classList.add("show-photo");
+
+    }, 1800); // after fade animation finishes
+
+    }, 4000);
+
+                        },1200);
+
+                    },800);
+
+                    return;
+                }
+
+                eraseWord(()=>{
+
+                    wordIndex++;
+
+                    animateWords();
+
+                });
+
+            }
+
+        );
+
+    }
+
+    setTimeout(
+
+        animateWords,
+
+        finalStartDelay
+
+    );
+
+}
+
+    /* ==========================
+       PAGE NAVIGATION
+    ========================== */
+
+   if (continueButton) {
 
     continueButton.addEventListener("click", () => {
 
@@ -774,10 +770,8 @@ if (continueButton) {
         } else if (path.includes("page5")) {
 
             window.location.href = "page6.html";
-
         }
 
-    });
-
+        });
 }
-});
+    });
