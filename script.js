@@ -280,21 +280,56 @@ if(heartButton){
 
 
     heartButton.addEventListener(
-    "click",
-    ()=>{
+"click",
+()=>{
 
-        startMusic();
 
-        createHeart();
+    // Fresh birthday experience
+    localStorage.removeItem("musicTime");
 
-        setTimeout(()=>{
+    localStorage.setItem(
+        "musicPlaying",
+        "true"
+    );
 
-            saveMusicState();
 
-            window.location.href = "pages/page2.html";
+    bgMusic.currentTime = 0;
+
+
+    bgMusic.play()
+    .then(()=>{
+
+        console.log(
+            "Music started from beginning"
+        );
+
+    })
+    .catch(()=>{
+
+        console.log(
+            "Music waiting for interaction"
+        );
+
+    });
+
+
+    createHeart();
+
+
+    setTimeout(()=>{
+
+
+        saveMusicState();
+
+
+        window.location.href =
+        "pages/page2.html";
+
 
     },3000);
- });
+
+
+});
 }
 
 
