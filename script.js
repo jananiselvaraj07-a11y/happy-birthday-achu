@@ -614,43 +614,97 @@ function wait(ms){
 
     function typeNotificationMessage(callback) {
 
-    const target = document.getElementById("typedNotification");
 
-    if (!target) {
-        if (callback) callback();
+    const top =
+    document.getElementById("typedTop");
+
+
+    const bottom =
+    document.getElementById("typedBottom");
+
+
+    if(!top || !bottom){
+
+        if(callback) callback();
+
         return;
+
     }
 
-    const message =
-`You're loved more than you know...
 
-Happy Birthday My Girlllll ✨❤️🫂`;
+    const first =
+    "You're loved more than you know...";
+
+
+    const second =
+    "Happy Birthday My Girlllll ✨❤️🫂";
+
+
+    top.innerHTML = "";
+    bottom.innerHTML = "";
+
 
     let i = 0;
 
-    target.innerHTML = "";
 
-    const typing = setInterval(() => {
+    const firstTyping =
+    setInterval(()=>{
 
-        const char = message.charAt(i);
 
-        if (char === "\n") {
-            target.innerHTML += "<br>";
-        } else {
-            target.innerHTML += char;
-        }
+        top.innerHTML += first.charAt(i);
+
 
         i++;
 
-        if (i >= message.length) {
 
-            clearInterval(typing);
+        if(i >= first.length){
 
-            if (callback) callback();
+
+            clearInterval(firstTyping);
+
+
+
+            setTimeout(()=>{
+
+
+                let j = 0;
+
+
+                const secondTyping =
+                setInterval(()=>{
+
+
+                    bottom.innerHTML += second.charAt(j);
+
+
+                    j++;
+
+
+                    if(j >= second.length){
+
+
+                        clearInterval(secondTyping);
+
+
+                        if(callback)
+                            callback();
+
+
+                    }
+
+
+                },55);
+
+
+
+            },600);
+
 
         }
 
-    }, 55); // typing speed
+
+    },55);
+
 
 }
 
