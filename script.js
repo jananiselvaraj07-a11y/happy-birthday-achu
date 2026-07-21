@@ -555,6 +555,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+    /* ==========================
+   STORY PARAGRAPH REVEAL
+========================== */
+
+
+if(storyParagraphs.length){
+
+
+    storyParagraphs.forEach((paragraph,index)=>{
+
+
+        setTimeout(()=>{
+
+
+            paragraph.classList.add("show");
+
+
+        }, 1500 + (index * 2500));
+
+
+    });
+
+
+}
 
 /* ==========================
    PAGE 6 SEQUENTIAL TIMELINE
@@ -600,7 +624,7 @@ function wait(ms){
     const message =
 `You're loved more than you know...
 
-Happy Birthday My Sunshine ✨❤️🫂`;
+Happy Birthday My Girlllll ✨❤️🫂`;
 
     let i = 0;
 

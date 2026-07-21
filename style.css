@@ -10,21 +10,109 @@
 
 body {
 
-    height: 100vh;
-    overflow: hidden;
+    height:100vh;
+    overflow:hidden;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-    background: linear-gradient(
-        180deg,
-        #060913 0%,
-        #0b1023 45%,
-        #171c36 100%
-    );
+    background:
 
-    font-family: "Poppins", sans-serif;
+        radial-gradient(
+            circle at 50% 18%,
+            rgba(255,120,180,.12) 0%,
+            rgba(255,120,180,0) 35%
+        ),
+
+        radial-gradient(
+            circle at 15% 80%,
+            rgba(140,120,255,.10) 0%,
+            transparent 40%
+        ),
+
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(120,200,255,.08) 0%,
+            transparent 35%
+        ),
+
+        linear-gradient(
+            180deg,
+            #060913 0%,
+            #0b1023 45%,
+            #171c36 100%
+        );
+
+    font-family:"Poppins",sans-serif;
+
+    position:relative;
+
+}
+
+body::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.08) 1px,
+            transparent 1px
+        );
+
+    background-size:140px 140px;
+
+    opacity:.35;
+
+    animation:twinkle 8s ease-in-out infinite;
+
+    pointer-events:none;
+
+}
+
+body::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:650px;
+    height:650px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,105,180,.12),
+            transparent 70%
+        );
+
+    top:-250px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    filter:blur(45px);
+
+    pointer-events:none;
+
+}
+
+@keyframes twinkle{
+
+    0%,100%{
+        opacity:.22;
+    }
+
+    50%{
+        opacity:.45;
+    }
 
 }
 
@@ -121,31 +209,28 @@ body {
    TITLE
 =========================== */
 
-.title {
+.title{
 
-    max-width: 900px;
+    font-family:"Great Vibes", cursive;
 
-    color: #d2b28d;
+    font-size:4rem;
 
-    font-family: "Cormorant Garamond", serif;
+    font-weight:400;
 
-    font-size: 50px;
+    color:#fffef8;
 
-    font-weight: 700;
+    line-height:1.2;
 
-    line-height: 1.35;
-
-    letter-spacing: 1px;
-
-    text-align: center;
+    text-align:center;
 
     text-shadow:
-        0 0 12px rgba(255,255,255,.20),
-        0 0 30px rgba(255,209,102,.18);
+        0 0 8px rgba(255,255,255,.35),
+        0 0 18px rgba(255,182,193,.45),
+        0 0 40px rgba(255,105,180,.25);
 
-    animation: fadeUp 2s;
+    max-width:900px;
 
-    transform: translateY(-40px);
+    margin:0 auto 25px;
 
 }
 
@@ -189,23 +274,62 @@ body {
    SUBTITLE
 =========================== */
 
-.subtitle {
+.subtitle{
 
-    color: #abb6b5;
+    font-family:"Cormorant Garamond", serif;
 
-    font-size: 30px;
+    font-size:1.55rem;
 
-    font-family: "Cormorant Garamond", serif;
+    color:#F8EDEB;
 
-    font-style: italic;
+    text-align:center;
 
-    font-weight: 500;
+    font-style:italic;
 
-    margin-top: 18px;
+    letter-spacing:.6px;
 
-    margin-bottom: 18px;
+    line-height:1.8;
 
-    animation: fadeUp 3s;
+    opacity:.95;
+
+    margin-top:12px;
+
+}
+
+#clickText{
+
+    font-family:"Cormorant Garamond", serif;
+
+    font-size:1.45rem;
+
+    color:#E8D7F1;
+
+    text-align:center;
+
+    margin-top:28px;
+
+    line-height:1.7;
+
+    font-style:italic;
+
+    transition:.4s;
+
+}
+
+.landing-card{
+
+    backdrop-filter:blur(18px);
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:34px;
+
+    padding:60px 70px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45);
 
 }
 
@@ -2589,44 +2713,56 @@ body.page2{
 
     font-size:26px;
 
-    color:#5A4A56;
+    color:#711703;
 
     line-height:1.8;
 
 }
 
 .notification-message{
-
-    margin-top:24px;
-
     text-align:center;
-
-    line-height:1.8;
-
+    line-height:1.7;
 }
 
-#typedNotification{
+.notification-top{
 
     display:block;
 
-    white-space:pre-line;
+    font-family:"Marck Script", cursive;
 
-    font-family:"Cormorant Garamond", serif;
+    font-size:1.8rem;
 
-    font-size:2rem;
+    color:#052a57;
 
-    font-style:italic;
+}
 
-    font-weight:500;
+.notification-bottom{
 
-    color:#6A5A68;
+    display:block;
 
-    letter-spacing:.4px;
+    margin-top:8px;
 
-    line-height:1.8;
+    font-family:"Great Vibes", cursive;
+
+    font-size:2.8rem;
+
+    color:#E75480;
 
     text-shadow:
-        0 0 8px rgba(231,84,128,.10);
+        0 0 12px rgba(231,84,128,.25),
+        0 0 22px rgba(255,209,102,.18);
+
+}
+
+.notification-label{
+
+    margin-bottom:16px;   /* Increase/decrease as needed */
+
+    font-family:"Poppins", sans-serif;
+
+    font-size:16px;
+
+    color:#805a03;
 
 }
 
