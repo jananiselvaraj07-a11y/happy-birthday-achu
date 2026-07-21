@@ -472,20 +472,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#memorySection");
 
     /*
-       First story reveal
-    */
-
-    storyParagraphs.forEach((p, index) => {
-
-        setTimeout(() => {
-
-            p.classList.add("show");
-
-        }, index * 2500);
-
-    });
-
-    /*
        Wish build up
     */
     const storyRevealSpeed = 2500;
@@ -571,10 +557,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* ==========================
-   PAGE 6 FINAL MESSAGE
+   PAGE 6 SEQUENTIAL TIMELINE
 ========================== */
 
 const page6Content = document.getElementById("page6Content");
+const endingScene = document.getElementById("endingScene");
+const notificationCard = document.querySelector(".notification-card");
+const endingHeart = document.getElementById("endingHeart");
+const fadeToBlack = document.getElementById("fadeToBlack");
 
 const birthdayHeading =
 document.querySelector(".final-message h1");
@@ -582,31 +572,101 @@ document.querySelector(".final-message h1");
 const gratefulLine =
 document.querySelector(".final-message p.final-line");
 
-if (birthdayHeading && gratefulLine) {
+const signatureText =
+document.querySelector(".signature-text");
 
-    const finalStartDelay =
-        (storyParagraphs.length * 2500) + 1500;
-
-    setTimeout(() => {
-        birthdayHeading.classList.add("show");
-    }, finalStartDelay);
-
-    setTimeout(() => {
-        gratefulLine.classList.add("show");
-    }, finalStartDelay + 1800);
-}
-
-
-/* ==========================
-   TYPEWRITER NICKNAME
-========================== */
+const signature =
+document.querySelector(".signature");
 
 const nicknameText =
 document.getElementById("nicknameText");
 
-if (nicknameText) {
 
-    const nicknames = [
+function wait(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/* Pause before notification */
+
+    function typeNotificationMessage(callback) {
+
+    const target = document.getElementById("typedNotification");
+
+    if (!target) {
+        if (callback) callback();
+        return;
+    }
+
+    const message =
+`You're loved more than you know...
+
+Happy Birthday My Sunshine ✨❤️🫂`;
+
+    let i = 0;
+
+    target.innerHTML = "";
+
+    const typing = setInterval(() => {
+
+        const char = message.charAt(i);
+
+        if (char === "\n") {
+            target.innerHTML += "<br>";
+        } else {
+            target.innerHTML += char;
+        }
+
+        i++;
+
+        if (i >= message.length) {
+
+            clearInterval(typing);
+
+            if (callback) callback();
+
+        }
+
+    }, 55); // typing speed
+
+}
+
+async function playPage6Timeline(){
+
+    // Only run on page 6
+    if(!nicknameText) return;
+
+    /* -------------------------
+       Reveal wishes
+    ------------------------- */
+
+    const storyText = document.querySelector("#page6Letter .story-text");
+
+    storyText?.classList.add("show");
+
+    const wishes =
+    document.querySelectorAll("#page6Letter .paragraph");
+
+    for(const wish of wishes){
+
+        wish.classList.add("show");
+
+        await wait(2200);
+
+    }
+
+    /* -------------------------
+       Happy Birthday heading
+    ------------------------- */
+
+    birthdayHeading.classList.add("show");
+
+    await wait(1800);
+
+    /* -------------------------
+       Typewriter nicknames
+    ------------------------- */
+
+    const nicknames=[
 
         "Batman",
         "Baby",
@@ -620,132 +680,130 @@ if (nicknameText) {
 
     ];
 
-    const finalStartDelay =
-        (storyParagraphs.length * 2500) + 1500;
+    for(const word of nicknames){
 
-    let wordIndex = 0;
+        nicknameText.textContent="";
 
-    function typeWord(word, callback){
+        for(const letter of word){
 
-        let i = 0;
+            nicknameText.textContent += letter;
 
-        nicknameText.textContent = "";
+            await wait(80);
 
-        const typing = setInterval(()=>{
+        }
 
-            nicknameText.textContent += word.charAt(i);
+        await wait(700);
 
-            i++;
+        while(nicknameText.textContent.length){
 
-            if(i === word.length){
+            nicknameText.textContent =
+            nicknameText.textContent.slice(0,-1);
 
-                clearInterval(typing);
+            await wait(40);
 
-                setTimeout(callback,900);
-
-            }
-
-        },80);
+        }
 
     }
 
-    function eraseWord(callback){
+    /* -------------------------
+       Keep final nickname
+    ------------------------- */
 
-        let word = nicknameText.textContent;
+    nicknameText.textContent = "Sunshine ✨";
 
-        const erasing = setInterval(()=>{
+    await wait(1200);
 
-            word = word.slice(0,-1);
+    // Reveal gratitude line
+    gratefulLine.classList.add("show");
 
-            nicknameText.textContent = word;
+    await wait(1800);
 
-            if(word.length===0){
+    // Reveal "With love,"
+    signatureText.classList.add("show");
 
-                clearInterval(erasing);
+    await wait(1400);
 
-                callback();
+    // Reveal signature
+    signature.classList.add("show");
 
-            }
+    await wait(1400);
 
-        },45);
+    signature.classList.add("show");
 
-    }
+    /* -------------------------
+       Stay on screen
+    ------------------------- */
 
-    function animateWords(){
+    await wait(5000);
 
-        typeWord(
+    /* Fade letter */
 
-            nicknames[wordIndex],
+    page6Content.classList.add("hide");
 
-            ()=>{
+    await wait(2200);
 
-                // Last nickname reached
-                if(wordIndex === nicknames.length - 1){
+    page6Content.classList.add("hidden");
 
-                    setTimeout(()=>{
+    // Wait 3 seconds before notification
+await wait(3000);
 
-                        document
-                            .querySelector(".signature-text")
-                            ?.classList.add("show");
+endingScene.classList.add("show");
 
-                        setTimeout(()=>{
+await wait(300);
 
-                            document
-                                .querySelector(".signature")
-                                ?.classList.add("show");
+notificationCard.classList.add("show");
 
-                            // Wait 4 seconds after Jan appears
+await wait(700);
 
-                            // Wait 4 seconds after Jan appears
-    setTimeout(() => {
+await new Promise(resolve=>{
+    typeNotificationMessage(resolve);
+});
 
-    page6Content?.classList.add("hide");
+await wait(5000);
 
-    setTimeout(() => {
+endingHeart.classList.add("show");
+    await wait(3500);
 
-        page6Content?.classList.add("hidden");
+    /* -------------------------
+       Fade to black
+    ------------------------- */
 
-        document.querySelector(".page6-page")
-    ?.classList.add("show-photo");
+    fadeToBlack.classList.add("show");
 
-    }, 1800); // after fade animation finishes
+    /* -------------------------
+       Fade music
+    ------------------------- */
 
-    }, 4000);
+    let volume = bgMusic.volume;
 
-                        },1200);
+    const fade = setInterval(()=>{
 
-                    },800);
+        volume -= 0.03;
 
-                    return;
-                }
+        if(volume <= 0){
 
-                eraseWord(()=>{
+            bgMusic.pause();
 
-                    wordIndex++;
+            bgMusic.currentTime = 0;
 
-                    animateWords();
+            clearInterval(fade);
 
-                });
+        }
+        else{
 
-            }
+            bgMusic.volume = volume;
 
-        );
+        }
 
-    }
-
-    setTimeout(
-
-        animateWords,
-
-        finalStartDelay
-
-    );
+    },150);
 
 }
 
-    /* ==========================
+playPage6Timeline();
+
+/* ==========================
        PAGE NAVIGATION
-    ========================== */
+========================== */
 
    if (continueButton) {
 
@@ -774,4 +832,5 @@ if (nicknameText) {
 
         });
 }
-    });
+   
+ });
